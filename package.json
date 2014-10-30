@@ -1,0 +1,18 @@
+{
+  "name": "lot-parser",
+  "version": "0.2.0",
+  "description": "Parser of Lot",
+  "license": "WTFPL",
+  "author": {
+    "name": "Minsheng Liu"
+  },
+  "email": "notcome@me.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/notcome/Lot.parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/notcome/Lot.parser/issues"
+  },
+  "homepage": "https://github.com/notcome/Lot.parser",
+}

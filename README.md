@@ -60,7 +60,16 @@ I am eating.
 ---
 ```
 
-Because originally I hope to derive types. I may add this feature in near future.
+Sometimes you just want an array of sentences, so use the following syntax:
+
+```
+toEng as [...] =
+---
+我在吃东西。
+我丢了东西。
+我在整理东西。
+---
+```
 
 You can also omit a field:
 
@@ -72,7 +81,7 @@ mainDataSet as Pair =
 ---
 ```
 
-You will get ``null`` in output JSON.
+You will get ``null`` in the output JSON.
 
 ## Status
 
