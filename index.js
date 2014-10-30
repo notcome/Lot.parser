@@ -1,5 +1,5 @@
 var TypeDefRegex = /define ([A-z]+) = (\[[A-z]+(\,[ ]*[A-z]+)*\])/
-var DataDefRegex = /([A-z]+) as ([A-z]+|\[[A-z]+(\,[ ]*[A-z]+)*\]) =/;
+var DataDefRegex = /([A-z]+) as ([A-z]+|\[[A-z]+(\,[ ]*[A-z]+)*\]|\[\.\.\.\]) =/;
 
 function LoTParser () {
   this.types = {};
@@ -13,7 +13,9 @@ LoTParser.prototype = {
     if (this.buffer.length == 0)
       return;
 
-    if (this.mapping.length == this.buffer.length)
+    if (this.mapping == 'array')
+      this.pushArray();
+    else if (this.mapping.length == this.buffer.length)
       this.pushObject();
     else
       throw new Error("Data definition hasn't finished.");
@@ -28,6 +30,11 @@ LoTParser.prototype = {
       obj[this.mapping[i]] = this.buffer[i];
 
     this.exports[this.name].push(obj);
+    delete this.buffer;
+  },
+
+  pushArray: function () {
+    this.exports[this.name] = this.exports[this.name].concat(this.buffer);
     delete this.buffer;
   },
 
@@ -47,7 +54,9 @@ LoTParser.prototype = {
   setUpDataDef: function (match) {
     this.tryPushOrThrow();
 
-    if (match[2][0] == '[')
+    if (match[2] == '[...]')
+      this.mapping = 'array'
+    else if (match[2][0] == '[')
       this.mapping = extractArray(match[2]);
     else {
       var mappingOp = this.types[match[2]];
