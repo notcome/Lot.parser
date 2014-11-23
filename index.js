@@ -9,15 +9,13 @@ var DataDefRegex = /([A-z]+) as ([A-z]+|\[[A-z]+(\,[ ]*[A-z]+)*\]|\[\.\.\.\]) =/
 function LoTParser() {
   this.types = {};
   this.exports = {};
+  this.buffer = [];
 }
-const Spacing = {type: 'Spacing'};
-const Delimiter = {type: 'Delimiter'};
+var Spacing = {type: 'Spacing'};
+var Delimiter = {type: 'Delimiter'};
 LoTParser.prototype = {
-  types: {},
-  exports: {},
   name: null,
   mapping: null,
-  buffer: [],
   mode: 'basicMode',
   intoBasicMode: function() {
     this.mode = 'basicMode';
@@ -35,10 +33,10 @@ LoTParser.prototype = {
 LoTParser.prototype.basicMode = function(line) {
   if (line == Spacing)
     return;
-  let matchTypeDef = TypeDefRegex.exec(line);
+  var matchTypeDef = TypeDefRegex.exec(line);
   if (matchTypeDef != null)
     return this.parseTypeDef(matchTypeDef);
-  let matchDatadef = DataDefRegex.exec(line);
+  var matchDatadef = DataDefRegex.exec(line);
   if (matchDatadef != null) {
     this.parseDataDef(matchDatadef);
     return this.intoTypeLoadedMode();
@@ -61,7 +59,7 @@ LoTParser.prototype.inputMode = function(line) {
   this.pushField(line);
 };
 LoTParser.prototype.parse = function(data) {
-  let preprocessed = data.split('\n').map(removeWrappingSpacing).map((function(line) {
+  var preprocessed = data.split('\n').map(removeWrappingSpacing).map((function(line) {
     return line.length ? line : Spacing;
   })).map((function(line) {
     return line != '---' ? line : Delimiter;
@@ -78,8 +76,8 @@ LoTParser.prototype.parse = function(data) {
   }
 };
 LoTParser.prototype.parseTypeDef = function(match) {
-  let name = match[1];
-  let mapping = extractArray(match[2]);
+  var name = match[1];
+  var mapping = extractArray(match[2]);
   this.types[name] = mapping;
 };
 LoTParser.prototype.parseDataDef = function(match) {
@@ -88,7 +86,7 @@ LoTParser.prototype.parseDataDef = function(match) {
   else if (match[2][0] == '[')
     this.mapping = extractArray(match[2]);
   else {
-    let $mapping = this.types[match[2]];
+    var $mapping = this.types[match[2]];
     if (!$mapping)
       throw 'Type doesn\'t exist.';
     this.mapping = $mapping;
@@ -100,7 +98,7 @@ LoTParser.prototype.pushField = function(line) {
   this.buffer.push(line);
 };
 LoTParser.prototype.parseBuffer = function() {
-  let $__1 = this,
+  var $__1 = this,
       name = $__1.name,
       exports = $__1.exports,
       mapping = $__1.mapping,

@@ -32,17 +32,15 @@ var DataDefRegex = /([A-z]+) as ([A-z]+|\[[A-z]+(\,[ ]*[A-z]+)*\]|\[\.\.\.\]) =/
 function LoTParser () {
   this.types = {};
   this.exports = {};
+  this.buffer = [];
 }
 
 const Spacing = { type: 'Spacing' };
 const Delimiter = { type: 'Delimiter' };
 
 LoTParser.prototype = {
-  types: {},
-  exports: {},
   name: null,
   mapping: null,
-  buffer: [],
 
   mode: 'basicMode',
   intoBasicMode: function () { this.mode = 'basicMode'; },
