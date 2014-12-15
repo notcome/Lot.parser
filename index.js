@@ -4,8 +4,16 @@ var _ = require('underscore');
 var $__0 = require('./util'),
     extractArray = $__0.extractArray,
     removeWrappingSpacing = $__0.removeWrappingSpacing;
-var TypeDefRegex = /define ([A-z]+) = (\[[A-z]+(\,[ ]*[A-z]+)*\])/;
-var DataDefRegex = /([A-z]+) as ([A-z]+|\[[A-z]+(\,[ ]*[A-z]+)*\]|\[\.\.\.\]) =/;
+var TypeDefRegex;
+var DataDefRegex;
+function initRegex() {
+  var idRegex = '[A-Za-z_][A-Za-z_0-9]+';
+  var typeDefRegex = 'define (%) = (\\[%(\\,[ ]*%)*\\])';
+  var dataDefRegex = '(%) as (%|\\[%(\\,[ ]*%)*\\]|\\[\\.\\.\\.\\]) =';
+  TypeDefRegex = new RegExp(typeDefRegex.replace(/%/g, idRegex));
+  DataDefRegex = new RegExp(dataDefRegex.replace(/%/g, idRegex));
+}
+initRegex();
 function LoTParser() {
   this.types = {};
   this.exports = {};
