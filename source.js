@@ -155,7 +155,7 @@ LoTParser.prototype.parseBuffer = function () {
     exports[name].push(_.object(mapping, buffer));
   }
   else
-    exports[name].concat(buffer);
+    exports[name] = exports[name].concat(buffer);
 
   this.buffer = [];
   return this.intoTypeLoadedMode();

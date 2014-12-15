@@ -116,7 +116,7 @@ LoTParser.prototype.parseBuffer = function() {
       throw 'Data definition hasn\'t finished.';
     exports[name].push(_.object(mapping, buffer));
   } else
-    exports[name].concat(buffer);
+    exports[name] = exports[name].concat(buffer);
   this.buffer = [];
   return this.intoTypeLoadedMode();
 };
