@@ -2,8 +2,11 @@ function extractArray (str) {
   function work (str) {
     var i = 0;
     var datum;
-    while (str[i] >= 'A' && str[i] <= 'z')
+    while(/[A-aZ-z0-9_]/.exec(str[i]) != null) {
       i ++;
+      if (i >= str.length)
+        break;
+    }
     datum = str.slice(0, i);
 
     if (i == str.length)
