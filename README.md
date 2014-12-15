@@ -25,7 +25,7 @@ Then, with a simple script, it can be compiled to JSON. That's ``Lot``.
 
 ```JSON
 {
-  "mainDataSet" = [
+  "mainDataSet" : [
   {
     "cmn": "我在吃东西。",
     "eng": "I am eating."
